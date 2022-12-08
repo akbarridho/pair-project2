@@ -26,7 +26,6 @@ tr:nth-child(even) {
 <body>
     <div style="text-align: center;margin-bottom: 20px;">
         <h1>All Books</h1>
-        <button type="button" onclick="location.href='/admin/add'">Add Books</button>
         <button type="button" onclick="location.href='/'">Back</button>
     </div>
     <table>
@@ -36,6 +35,7 @@ tr:nth-child(even) {
             <th>Book Code</th>
             <th>Publish</th>
             <th>Publisher</th>
+            <th>Total Like</th>
             <th>Action</th>
         </tr>
         <% data.forEach((el, index) => { %>
@@ -45,9 +45,9 @@ tr:nth-child(even) {
                 <td><%= el.bookCode %></td>
                 <td><%= formatDate(el.publish) %></td>
                 <td><%= el.Profile.fullName %></td>
+                <td><%= el.Likes.length %></td>
                 <td>
-                    <button type="button" onclick="location.href='/admin/<%= el.id %>'">Detail</button>
-                    <button type="button" onclick="location.href='/admin/<%= el.id %>/delete'">Delete</button>
+                    <button type="button" onclick="location.href='/visitor/<%= el.id %>'">See More</button>
                 </td>
             </tr>
         <% }) %>

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.hasMany(models.Book)
       Profile.belongsTo(models.User)
+      Profile.hasMany(models.Like)
     }
   }
   Profile.init({

@@ -7,10 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Wellcome</h1>
+    <h1>Welcome <%= data.fullName %></h1>
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
     <button type="button" onclick="location.href='/admin'">Admin</button>
+    <button type="button" onclick="location.href='/visitor'">Visitor</button>
+    <button type="button" onclick="location.href='/logout'">Log Out</button>
 </body>
 </html>

@@ -3,11 +3,21 @@ const homeController = require('../controllers/homeController')
 const userController = require('../controllers/userController')
 const router = express.Router()
 const adminRouter = require('./adminRouter')
+const visitorRouter = require('./visitorRouter')
 
-router.get('/register', userController.renderRegister)
+const isLogin = function(req, res, next) {
+    if (req.session.UserId) {
+        res.redirect('/')
+    } else {
+        next()
+    }
+  }
+
+router.get('/register', isLogin, userController.renderRegister)
 router.post('/register', userController.handleRegister)
-router.get('/login', userController.renderLogin)
+router.get('/login', isLogin, userController.renderLogin)
 router.post('/login', userController.handleLogin)
+router.get('/logout', userController.getLogOut)
 
 router.use((req, res, next) => {
     if (req.session.UserId) {
@@ -29,5 +39,6 @@ const isAdmin = function(req, res, next) {
 
 router.get('/', homeController.showHome)
 router.use('/admin', isAdmin, adminRouter)
+router.use('/visitor', visitorRouter)
 
 module.exports = router

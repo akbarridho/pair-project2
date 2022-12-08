@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book</title>
+</head>
+<body>
+    <h1>Edit Book</h1>
+    <form method="post" action="/admin/<%= data.id %>/edit">
+        <p>Title</p>
+        <input type="text" name="title" value="<%= data.title %>">
+        <p>Genre</p>
+        <select name="genre">
+            <option value="Horor" <%= data.genre == 'Horor' ? "selected" : "" %>>Horor</option>
+            <option value="Romance" <%= data.genre == 'Romance' ? "selected" : "" %>>Romance</option>
+            <option value="Fantasi" <%= data.genre == 'Fantasi' ? "selected" : "" %>>Fantasi</option>
+            <option value="Romance" <%= data.genre == 'Romance' ? "selected" : "" %>>Romance</option>
+            <option value="Sejarah" <%= data.genre == 'Sejarah' ? "selected" : "" %>>Sejarah</option>
+        </select>
+        <p>Publish</p>
+        <input type="date" name="publish" value="<%= formatDate(data.publish) %>">
+        <p>Description</p>
+        <textarea name="description"><%= data.description %></textarea>
+        <div>
+            <button style="margin-top: 20px;" type="submit">Edit Book</button>
+        </div>
+    </form>
+</body>
+</html>

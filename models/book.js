@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Book.belongsTo(models.Profile)
+      Book.hasMany(models.Like)
     }
     hassing() {
       let length = this.title.length
@@ -31,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (book) => {
+        book.bookCode = book.hassing()
+      },
+      beforeUpdate: (book) => {
         book.bookCode = book.hassing()
       }
     },

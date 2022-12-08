@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    let flag = null
+</script>
+<body>
+    <div style="text-align: center;">
+        <h1>Buku <%= data.title %></h1>
+        <button type="button" onclick="location.href='/visitor'">Back</button>
+        <p>Title: <%= data.title %></p>
+        <p>Genre: <%= data.genre %></p>
+        <p>Book Code: <%= data.bookCode %></p>
+        <p>Publish Date: <%= formatDate(data.publish) %></p>
+        <p>Description:</p>
+        <textarea disabled><%= data.description %></textarea>
+        <p>Published By: <%= data.Profile.fullName %></p>
+        <% for (var i = 0; i < data.Likes.length; i++) { %>
+            <% if(data.Likes[i].id == userId){ %>
+              <% flag = 1 %>
+            <% } %>
+          <% } %>
+          
+          <% if(!flag){ %>
+            <button type="button" onclick="location.href='/visitor/<%= data.id %>/like'">Like</button>
+          <% } %> 
+        </div>
+</body>
+</html>
