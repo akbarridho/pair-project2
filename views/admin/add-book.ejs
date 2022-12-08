@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+</head>
+<body>
+    <h1>Add Book</h1>
+    <form method="post" action="/admin/add">
+        <p>Title</p>
+        <input type="text" name="title">
+        <p>Genre</p>
+        <select name="genre">
+            <option selected disabled>--SELECT--</option>
+            <option value="Horor">Horor</option>
+            <option value="Romance">Romance</option>
+            <option value="Horor">Horor</option>
+            <option value="Fantasi">Fantasi</option>
+            <option value="Romance">Romance</option>
+            <option value="Horor">Horor</option>
+            <option value="Sejarah">Sejarah</option>
+        </select>
+        <p>Publish</p>
+        <input type="date" name="publish">
+        <p>Description</p>
+        <textarea name="description"></textarea>
+        <div>
+            <button style="margin-top: 20px;" type="submit">Add Book</button>
+        </div>
+    </form>
+</body>
+</html>
