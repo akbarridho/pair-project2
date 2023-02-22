@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Like.belongsTo(models.Book)
-      Like.belongsTo(models.Profile)
+      Like.belongsTo(models.User)
     }
   }
   Like.init({
     BookId: DataTypes.INTEGER,
-    ProfileId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',

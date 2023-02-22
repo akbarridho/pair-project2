@@ -4,7 +4,9 @@ class homeController {
     static showHome(req, res) {
         let id = req.session.UserId
         let error = req.query.error
-        Profile.findByPk(id)
+        Profile.findOne({
+            where: {UserId: id}
+        })
             .then((data) => {
                 res.render('home', {data, error})
             })

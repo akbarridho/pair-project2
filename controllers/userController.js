@@ -10,9 +10,6 @@ class userController {
     static handleRegister(req, res) {
         const { userName, email, password, role, fullName, gender, profilePicture } = req.body
         User.create({userName, email, password, role})
-            .then((data) => {
-                return Profile.create({fullName, gender, profilePicture, UserId: data.id}) 
-            })
             .then((_) => {
                 res.redirect('/login')
             })

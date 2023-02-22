@@ -4,6 +4,7 @@ const userController = require('../controllers/userController')
 const router = express.Router()
 const adminRouter = require('./adminRouter')
 const visitorRouter = require('./visitorRouter')
+const profileRouter = require('./profileRouter')
 
 const isLogin = function(req, res, next) {
     if (req.session.UserId) {
@@ -38,6 +39,7 @@ const isAdmin = function(req, res, next) {
 }
 
 router.get('/', homeController.showHome)
+router.use('/profile', profileRouter)
 router.use('/admin', isAdmin, adminRouter)
 router.use('/visitor', visitorRouter)
 

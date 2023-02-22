@@ -1,12 +1,17 @@
-const { Book, Profile, User } = require('../models/index')
+const { Book, Profile, User, Like } = require('../models/index')
 const { formatDate } = require('../helpers/formatDate')
 
 class adminController {
     static getAllBooks(req, res) {
         Book.findAll({
-            include: {
-                model: Profile
-            }
+            include: [
+                {
+                    model: User,
+                    include: {
+                        model: Profile
+                    }
+                }
+        ]
         })        
             .then((data) => {
                 res.render('admin/all-book', {data, formatDate})
@@ -17,42 +22,55 @@ class adminController {
     }
 
     static renderAddBook(req, res) {
-        Profile.findAll({
-            include: {
-                model: User
-            }
-        })
-            .then((data) => {
-                res.render('admin/add-book', {data})
-            })
-            .catch((err) => {
-                res.send(err)
-            })
+        let error = req.query.error
+        res.render('admin/add-book', {error})
     }
 
     static handleAddBook(req, res) {
         const { title, genre, publish, description } = req.body
-        Book.create({title, genre, publish, description, ProfileId: req.session.UserId})
+        Book.create({title, genre, publish, description, UserId: req.session.UserId})
             .then((_) => {
                 res.redirect('/admin')
             })
             .catch((err) => {
-                res.send(err)
+                if (err.name == 'SequelizeValidationError') {
+                    let error = err.errors.map((el) => {
+                        return el.message
+                    })
+                    res.redirect(`/admin/add?error=${error}`)
+                } else {
+                    res.send(err)
+                }
             })
     }
 
     static getDetailBook(req, res) {
+        let data
         let id = req.params.BookId
         Book.findOne({
             where: {
                 id
             },
-            include: {
-                model: Profile
-            }
+            include: [
+                {
+                    model: User,
+                    include: Profile
+                },
+                {model: Like}
+            ]
         })
-            .then((data) => {
-                res.render('admin/detail-book', {data, formatDate})
+            .then((result) => {
+                data = result
+                // res.send(data)
+                return User.findAll({
+                    include: {
+                        model: Profile
+                    }
+                })
+            })
+            .then((data2) => {
+                // res.send(data2)
+                res.render('admin/detail-book', {data, data2, formatDate})
             })
             .catch((err) => {
                 res.send(err)
@@ -60,6 +78,7 @@ class adminController {
     }
 
     static renderEditBook(req, res) {
+        let error = req.query.error
         let id = req.params.BookId
         let data
         Book.findOne({
@@ -72,7 +91,7 @@ class adminController {
                 return Profile.findAll()
             })
             .then((data2) => {
-                res.render('admin/edit-book', {data, data2, formatDate})
+                res.render('admin/edit-book', {data, data2, error, formatDate})
             })
             .catch((err) => {
                 res.send(err)
@@ -87,7 +106,14 @@ class adminController {
                 res.redirect(`/admin/${id}`)
             })
             .catch((err) => {
-                res.send(err)
+                if (err.name == 'SequelizeValidationError') {
+                    let error = err.errors.map((el) => {
+                        return el.message
+                    })
+                    res.redirect(`/admin/${id}/edit?error=${error}`)
+                } else {
+                    res.send(err)
+                }
             })
     }
 

@@ -29,28 +29,30 @@ tr:nth-child(even) {
         <button type="button" onclick="location.href='/admin/add'">Add Books</button>
         <button type="button" onclick="location.href='/'">Back</button>
     </div>
-    <table>
-        <tr>
-            <th>No</th>
-            <th>Title</th>
-            <th>Book Code</th>
-            <th>Publish</th>
-            <th>Publisher</th>
-            <th>Action</th>
-        </tr>
-        <% data.forEach((el, index) => { %>
+    <div style="margin-right: 80px;margin-left: 50px;">
+        <table>
             <tr>
-                <td><%= index + 1 %></td>
-                <td><%= el.title %></td>
-                <td><%= el.bookCode %></td>
-                <td><%= formatDate(el.publish) %></td>
-                <td><%= el.Profile.fullName %></td>
-                <td>
-                    <button type="button" onclick="location.href='/admin/<%= el.id %>'">Detail</button>
-                    <button type="button" onclick="location.href='/admin/<%= el.id %>/delete'">Delete</button>
-                </td>
+                <th>No</th>
+                <th>Title</th>
+                <th>Book Code</th>
+                <th>Publish</th>
+                <th>Publisher</th>
+                <th>Action</th>
             </tr>
-        <% }) %>
-    </table>
+            <% data.forEach((el, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= el.title %></td>
+                    <td><%= el.bookCode %></td>
+                    <td><%= formatDate(el.publish) %></td>
+                    <td><%= el.User.Profile.fullName %></td>
+                    <td>
+                        <button type="button" onclick="location.href='/admin/<%= el.id %>'">Detail</button>
+                        <button type="button" onclick="location.href='/admin/<%= el.id %>/delete'">Delete</button>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
 </body>
 </html>

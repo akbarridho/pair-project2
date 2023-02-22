@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, Op
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Book extends Model {
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Book.belongsTo(models.Profile)
+      Book.belongsTo(models.User)
       Book.hasMany(models.Like)
     }
     hassing() {
@@ -21,14 +21,82 @@ module.exports = (sequelize, DataTypes) => {
       let publish = this.publish.toLocaleDateString().split('/').join('')
       return `${genre}.${title[0]}.${publish}.${length}`
     }
+
+    static searchTitleBook(search, Profile, Like, User) {
+      let option = {
+        include: [
+            {
+              model: User,
+              include: {
+                model: Profile
+              }
+            },
+            {model: Like}
+        ]
+      }
+      
+      if (search) {
+        option.where = {
+            title: {
+                [Op.iLike]: `%${search}%`
+            }
+          }
+        }
+        
+        return Book.findAll(option)
+    }
   }
   Book.init({
-    title: DataTypes.STRING,
-    genre: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Title cannot be empty"
+        },
+        notNull: {
+          msg: "Title cannot be empty"
+        }
+      }
+    },
+    genre: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Genre cannot be empty"
+        },
+        notNull: {
+          msg: "Genre cannot be empty"
+        }
+      }
+    },
     bookCode: DataTypes.STRING,
-    publish: DataTypes.DATE,
-    description: DataTypes.TEXT,
-    ProfileId: DataTypes.INTEGER
+    publish: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Publish cannot be empty"
+        },
+        notNull: {
+          msg: "Publish cannot be empty"
+        }
+      }
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Description cannot be empty"
+        },
+        notNull: {
+          msg: "Description cannot be empty"
+        }
+      }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     hooks: {
       beforeCreate: (book) => {

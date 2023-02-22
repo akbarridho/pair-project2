@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" action="/profile/add">
+        <div>
+            <h1>Add Profile</h1>
+            <% if (errors) { %>
+                <% errors.split(",").forEach((el) => { %>
+                    <p style="color: red;"><%= el %></p>
+                <% }) %>
+            <% } %>
+            <p>Your Name</p>
+            <input name="fullName" type="text">
+            <p>Gender</p>
+            <select name="gender">
+                <option selected disabled>--SELECT--</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <p>Profile Picture</p>
+            <input type="text" name="profilePicture">
+        </div>
+        <div>
+            <button type="submit">Add Profile</button>
+            <button type="button" onclick="location.href='/'">Back</button>
+        </div>
+    </form>
+</body>
+</html>

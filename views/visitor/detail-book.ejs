@@ -10,7 +10,7 @@
     let flag = null
 </script>
 <body>
-    <div style="text-align: center;">
+    <div style="text-align: center; margin-bottom: 20px;">
         <h1>Buku <%= data.title %></h1>
         <button type="button" onclick="location.href='/visitor'">Back</button>
         <p>Title: <%= data.title %></p>
@@ -19,16 +19,14 @@
         <p>Publish Date: <%= formatDate(data.publish) %></p>
         <p>Description:</p>
         <textarea disabled><%= data.description %></textarea>
-        <p>Published By: <%= data.Profile.fullName %></p>
-        <% for (var i = 0; i < data.Likes.length; i++) { %>
-            <% if(data.Likes[i].id == userId){ %>
-              <% flag = 1 %>
-            <% } %>
-          <% } %>
-          
-          <% if(!flag){ %>
-            <button type="button" onclick="location.href='/visitor/<%= data.id %>/like'">Like</button>
-          <% } %> 
+        <p>Published By: <%= data.User.Profile.fullName %></p>
+        <% if (role == 'Visitor') { %>
+            <button type="button" onclick="location.href='/visitor/<%= data.id %>/like'">Like</button> 
+        <% } %>
         </div>
+        <center>
+            <img style="width: 200px; height: 200px;" src="<%= qr_code %>">
+            <h2 style="color: orange;">Please Share Post</h2>
+        </center>
 </body>
 </html>

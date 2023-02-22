@@ -7,12 +7,21 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome <%= data.fullName %></h1>
+    <% if (data) { %>
+        <h1>Welcome <%= data.fullName %></h1>
+    <% } else { %>
+        <h1>Welcome</h1>
+    <% } %>
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
-    <button type="button" onclick="location.href='/admin'">Admin</button>
-    <button type="button" onclick="location.href='/visitor'">Visitor</button>
+    <% if (!data) { %>
+        <button type="button" onclick="location.href='/profile/add'">Add Profile</button>
+    <% } else if (data) { %>
+        <button type="button" onclick="location.href='/admin'">Admin</button>
+        <button type="button" onclick="location.href='/visitor'">Visitor</button>
+        <button type="button" onclick="location.href='/profile/<%= data.id %>/edit'">Edit Profile</button>
+    <% } %>
     <button type="button" onclick="location.href='/logout'">Log Out</button>
 </body>
 </html>

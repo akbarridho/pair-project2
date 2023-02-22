@@ -24,10 +24,10 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      ProfileId: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Profiles",
+          model: "Users",
           key: "id"
         },
         onDelete: "cascade",

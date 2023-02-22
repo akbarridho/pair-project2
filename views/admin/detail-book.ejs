@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
 <body>
     <div style="text-align: center;">
         <h1>Buku <%= data.title %></h1>
@@ -17,7 +34,27 @@
         <p>Publish Date: <%= formatDate(data.publish) %></p>
         <p>Description:</p>
         <textarea disabled><%= data.description %></textarea>
-        <p>Published By: <%= data.Profile.fullName %></p>
+        <p>Published By: <%= data.User.Profile.fullName %></p>
+    </div>
+    <div style="margin-left:40px;margin-right:50px;">
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Date</th>
+            </tr>
+            <% data.Likes.forEach((el, index) => { %>
+                <% data2.forEach((el2) => { %>
+                    <% if (el.UserId == el2.id) { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= el2.Profile.fullName %></td>
+                            <td><%= el.createdAt %></td>
+                        </tr>       
+                    <% } %>
+                <% }) %>
+            <% }) %>
+        </table>
     </div>
 </body>
 </html>
